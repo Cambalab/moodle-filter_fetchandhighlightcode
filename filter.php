@@ -43,14 +43,31 @@ class filter_syntaxhighlighter extends moodle_text_filter {
      * @return string String containing processed HTML.
      */
     public function filter($text, array $options = array()) {
+        //Define necessary regexs
+        $regexOnlyGitlabAndGithub = '/(https:\/\/gitlab.com|https:\/\/raw.githubusercontent.com)/';
+        $regexExternalSources = '/(https?|ftp):\/\/(-\.)?([^\s\/?\.#-]+\.?)+(\/[^\s]*)?/';
+        $useExternalSources = get_config('filter_syntaxhighlighter', 'allowexternalsource');
+
         if (!is_string($text) || empty($text)) {
             return $text;
         }
 
         $re = "~```(.*?)```~isu";
+        $urlFormat = (($useExternalSources > 0) ? $regexAllRepo : $regexOnlyGitlabAndGithub);
+
         $result = preg_match_all($re, $text, $matches);
         if ($result > 0) {
             foreach ($matches[1] as $idx => $code) {
+            // Check if the code has url format
+              if (preg_match($urlFormat , $code,$matchUrlFormat)){
+                // Check using strncmp to validate $code doesn´t have nothing else than the url
+                if(strncmp($matchUrlFormat[0], $code,strlen($matchUrlFormat[0])) !== 0 ){
+                   $code = $this->fetchCodeFromUrl($code);
+                 }
+                 else{
+                   return $text;
+                 }
+              }
                 $newcode = '<pre><code>' .
                     str_replace(['<p>', '</p>'], ['', "\n"], $code) .
                     '</code></pre>';
@@ -87,4 +104,26 @@ class filter_syntaxhighlighter extends moodle_text_filter {
             $jsinitialised = true;
         }
     }
+
+    /**
+     * Fetch code  from repository
+     *
+     * @param url url to fetch code from.
+     * @return codeResult  String contains fetched code.
+     */
+
+    protected function fetchCodeFromUrl($url) {
+      $cleanedUrl = (string) trim(strip_tags($url));
+      $ch = curl_init($cleanedUrl);
+      curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+      $codeResult = curl_exec($ch);
+      $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+      if($httpCode != 200 ) {
+             $codeResult=$url;
+            }
+      curl_close ($ch);
+      $codeResult=htmlentities($codeResult);
+      return $codeResult;
+    }
+
 }
