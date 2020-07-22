@@ -53,7 +53,7 @@ class filter_fetchandhighlightcode extends moodle_text_filter {
         }
 
         $re = "~```(.*?)```~isu";
-        $urlFormat = (($useExternalSources > 0) ? $regexAllRepo : $regexOnlyGitlabAndGithub);
+        $urlFormat = (($useExternalSources > 0) ? $regexExternalSources : $regexOnlyGitlabAndGithub);
 
         $result = preg_match_all($re, $text, $matches);
         if ($result > 0) {
