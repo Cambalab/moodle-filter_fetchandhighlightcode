@@ -15,18 +15,18 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Version of syntaxhighlighter.
+ * Version of fetchandhighlightcode.
  *
- * @package   filter_syntaxhighlighter
- * @author    Mark Sharp <m.sharp@chi.ac.uk>
- * @copyright 2017 University of Chichester {@link www.chi.ac.uk}
+ * @package   filter_fetchandhighlightcode
+ * @author    Camba Coop <info@camba.coop>
+ * @copyright 2020 Camba Coop {@link www.camba.coop}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version = 2018041301;
-$plugin->requires = 2017111302;
-$plugin->component = 'filter_syntaxhighlighter';
+$plugin->version = 2020072202;
+$plugin->requires = 2019052000;
+$plugin->component = 'filter_fetchandhighlightcode';
 $plugin->maturity = MATURITY_STABLE;
-$plugin->release = '3.4.2';
+$plugin->release = '0.0.2';

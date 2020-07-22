@@ -15,22 +15,25 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Privacy Subsystem implementation for filter_syntaxhighlighter.
+ * Privacy Subsystem implementation for filter_fetchandhighlightcode.
  *
- * @package    filter_syntaxhighlighter
- * @copyright  2018 Mark Sharp <m.sharp@chi.ac.uk>
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package   filter_fetchandhighlightcode
+ * @author    Camba Coop <info@camba.coop>
+ * @copyright 2020 Camba Coop {@link www.camba.coop}
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace filter_syntaxhighlighter\privacy;
+namespace filter_fetchandhighlightcode\privacy;
 
 defined('MOODLE_INTERNAL') || die();
 
 /**
- * Privacy Subsystem for filter_syntaxhighlighter implementing null_provider.
+ * Privacy Subsystem for filter_fetchandhighlightcode implementing null_provider.
  *
- * @copyright  2018 Mark Sharp <m.sharp@chi.ac.uk>
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package   filter_fetchandhighlightcode
+ * @author    Camba Coop <info@camba.coop>
+ * @copyright 2020 Camba Coop {@link www.camba.coop}
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class provider implements \core_privacy\local\metadata\null_provider {
 

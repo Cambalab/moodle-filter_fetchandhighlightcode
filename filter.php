@@ -17,9 +17,9 @@
 /**
  * Main filter class
  *
- * @package   filter_syntaxhighlighter
- * @author    Mark Sharp <m.sharp@chi.ac.uk>
- * @copyright 2017 University of Chichester {@link www.chi.ac.uk}
+ * @package   filter_fetchandhighlightcode
+ * @author    Camba Coop <info@camba.coop>
+ * @copyright 2020 Camba Coop {@link www.camba.coop}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -28,12 +28,12 @@ defined('MOODLE_INTERNAL') || die();
 /**
  * Filter class for highlighting code syntax.
  *
- * @package filter_syntaxhighlighter
- * @author    Mark Sharp <m.sharp@chi.ac.uk>
- * @copyright 2017 University of Chichester {@link www.chi.ac.uk}
+ * @package   filter_fetchandhighlightcode
+ * @author    Camba Coop <info@camba.coop>
+ * @copyright 2020 Camba Coop {@link www.camba.coop}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class filter_syntaxhighlighter extends moodle_text_filter {
+class filter_fetchandhighlightcode extends moodle_text_filter {
 
     /**
      * The filter function is required, but the text just passes through.
@@ -46,7 +46,7 @@ class filter_syntaxhighlighter extends moodle_text_filter {
         //Define necessary regexs
         $regexOnlyGitlabAndGithub = '/(https:\/\/gitlab.com|https:\/\/raw.githubusercontent.com)/';
         $regexExternalSources = '/(https?|ftp):\/\/(-\.)?([^\s\/?\.#-]+\.?)+(\/[^\s]*)?/';
-        $useExternalSources = get_config('filter_syntaxhighlighter', 'allowexternalsource');
+        $useExternalSources = get_config('filter_fetchandhighlightcode', 'allowexternalsource');
 
         if (!is_string($text) || empty($text)) {
             return $text;
@@ -89,16 +89,16 @@ class filter_syntaxhighlighter extends moodle_text_filter {
         static $jsinitialised = false;
 
         if (empty($jsinitialised)) {
-            $css = get_config('filter_syntaxhighlighter', 'styleurl');
-            $cdn = get_config('filter_syntaxhighlighter', 'cdn');
+            $css = get_config('filter_fetchandhighlightcode', 'styleurl');
+            $cdn = get_config('filter_fetchandhighlightcode', 'cdn');
             if ($cdn) {
                 $css = 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/' . $css . '.min.css';
             } else {
-                $css = $CFG->wwwroot . '/filter/syntaxhighlighter/styles/' . $css . '.min.css';
+                $css = $CFG->wwwroot . '/filter/fetchandhighlightcode/styles/' . $css . '.min.css';
             }
             $styleurl = new moodle_url($css);
 
-            $page->requires->js_call_amd('filter_syntaxhighlighter/hljs', 'initHighlighting');
+            $page->requires->js_call_amd('filter_fetchandhighlightcode/hljs', 'initHighlighting');
             $page->requires->css($styleurl);
 
             $jsinitialised = true;

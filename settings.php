@@ -15,11 +15,11 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Settings for syntax highlighter.
+ * Settings for fetch and highlight code.
  *
- * @package   filter_syntaxhighlighter
- * @author    Mark Sharp <m.sharp@chi.ac.uk>
- * @copyright 2017 University of Chichester {@link www.chi.ac.uk}
+ * @package   filter_fetchandhighlightcode
+ * @author    Camba Coop <info@camba.coop>
+ * @copyright 2020 Camba Coop {@link www.camba.coop}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -112,22 +112,22 @@ if ($ADMIN->fulltree) {
         'xt256' => 'xt256',
         'zenburn' => 'zenburn'];
 
-    $setting = new admin_setting_configselect('filter_syntaxhighlighter/styleurl',
-                                         new lang_string('style', 'filter_syntaxhighlighter'),
-                                         new lang_string('style_desc', 'filter_syntaxhighlighter'),
+    $setting = new admin_setting_configselect('filter_fetchandhighlightcode/styleurl',
+                                         new lang_string('style', 'filter_fetchandhighlightcode'),
+                                         new lang_string('style_desc', 'filter_fetchandhighlightcode'),
                                          'atom-one-light',
                                          $options);
     $settings->add($setting);
 
-    $setting = new admin_setting_configcheckbox('filter_syntaxhighlighter/cdn',
-                                        new lang_string('cdn', 'filter_syntaxhighlighter'),
-                                        new lang_string('cdn_desc', 'filter_syntaxhighlighter'),
+    $setting = new admin_setting_configcheckbox('filter_fetchandhighlightcode/cdn',
+                                        new lang_string('cdn', 'filter_fetchandhighlightcode'),
+                                        new lang_string('cdn_desc', 'filter_fetchandhighlightcode'),
                                         0);
     $settings->add($setting);
 
-    $setting = new admin_setting_configcheckbox('filter_syntaxhighlighter/allowexternalsource',
-                                       new lang_string('allowexternalsource', 'filter_syntaxhighlighter'),
-                                       new lang_string('allowexternalsource_desc', 'filter_syntaxhighlighter'),
+    $setting = new admin_setting_configcheckbox('filter_fetchandhighlightcode/allowexternalsource',
+                                       new lang_string('allowexternalsource', 'filter_fetchandhighlightcode'),
+                                       new lang_string('allowexternalsource_desc', 'filter_fetchandhighlightcode'),
                                        0);
 
     $settings->add($setting);
