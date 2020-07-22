@@ -1,5 +1,8 @@
 # Changes
 
+## Version 2020072203
+*  Fixed fetching from gitlab repos
+
 ## Version 2020072202
 *  Renamed project
 *  Added Spanish translations

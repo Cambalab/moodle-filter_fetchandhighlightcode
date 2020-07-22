@@ -25,8 +25,8 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version = 2020072202;
+$plugin->version = 2020072203;
 $plugin->requires = 2019052000;
 $plugin->component = 'filter_fetchandhighlightcode';
 $plugin->maturity = MATURITY_STABLE;
-$plugin->release = '0.0.2';
+$plugin->release = '0.0.3';
