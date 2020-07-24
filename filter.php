@@ -19,7 +19,7 @@
  *
  * @package   filter_fetchandhighlightcode
  * @author    Camba Coop <info@camba.coop>
- * @copyright 2020 Camba Coop {@link www.camba.coop}
+ * @copyright 2020 Camba Coop {@link https://www.camba.coop}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -30,7 +30,7 @@ defined('MOODLE_INTERNAL') || die();
  *
  * @package   filter_fetchandhighlightcode
  * @author    Camba Coop <info@camba.coop>
- * @copyright 2020 Camba Coop {@link www.camba.coop}
+ * @copyright 2020 Camba Coop {@link https://www.camba.coop}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class filter_fetchandhighlightcode extends moodle_text_filter {
@@ -43,31 +43,30 @@ class filter_fetchandhighlightcode extends moodle_text_filter {
      * @return string String containing processed HTML.
      */
     public function filter($text, array $options = array()) {
-        //Define necessary regexs
-        $regexOnlyGitlabAndGithub = '/(https:\/\/gitlab.com|https:\/\/raw.githubusercontent.com)/';
-        $regexExternalSources = '/(https?|ftp):\/\/(-\.)?([^\s\/?\.#-]+\.?)+(\/[^\s]*)?/';
-        $useExternalSources = get_config('filter_fetchandhighlightcode', 'allowexternalsource');
+        // Define necessary regexs.
+        $trustedsourcespattern = '/(https:\/\/gitlab.com|https:\/\/raw.githubusercontent.com)/';
+        $externalsourcespattern = '/(https?|ftp):\/\/(-\.)?([^\s\/?\.#-]+\.?)+(\/[^\s]*)?/';
+        $allowallsources = get_config('filter_fetchandhighlightcode', 'allowexternalsource');
 
         if (!is_string($text) || empty($text)) {
             return $text;
         }
 
-        $re = "~```(.*?)```~isu";
-        $urlFormat = (($useExternalSources > 0) ? $regexExternalSources : $regexOnlyGitlabAndGithub);
+        $re = '~```(.*?)```~isu';
+        $urlpattern = (($allowallsources > 0) ? $externalsourcespattern : $trustedsourcespattern);
 
         $result = preg_match_all($re, $text, $matches);
         if ($result > 0) {
             foreach ($matches[1] as $idx => $code) {
-            // Check if the code has url format
-              if (preg_match($urlFormat , $code, $matchUrlFormat)){
-                // Check using strncmp to validate $code doesn´t have nothing else than the url
-                if(strncmp($matchUrlFormat[0], $code,strlen($matchUrlFormat[0])) !== 0 ){
-                   $code = $this->fetchCodeFromUrl($code);
-                 }
-                 else{
-                   return $text;
-                 }
-              }
+                // Check if the code has url format.
+                if (preg_match($urlpattern , $code, $matchedurlspattern)) {
+                    // Check using strncmp to validate $code doesn´t have nothing else than the url.
+                    if (strncmp($matchedurlspattern[0], $code, strlen($matchedurlspattern[0])) !== 0 ) {
+                        $code = $this->fetchcodefromurl($code);
+                    } else {
+                        return $text;
+                    }
+                }
                 $newcode = '<pre><code>' .
                     str_replace(['<p>', '</p>'], ['', "\n"], $code) .
                     '</code></pre>';
@@ -109,21 +108,21 @@ class filter_fetchandhighlightcode extends moodle_text_filter {
      * Fetch code  from repository
      *
      * @param url url to fetch code from.
-     * @return codeResult  String contains fetched code.
+     * @return coderesult  String contains fetched code.
      */
 
-    protected function fetchCodeFromUrl($url) {
-      $cleanedUrl = (string) trim(strip_tags($url));
-      $ch = curl_init($cleanedUrl);
-      curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-      $codeResult = curl_exec($ch);
-      $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-      if($httpCode != 200 ) {
-             $codeResult=$url;
-            }
-      curl_close ($ch);
-      $codeResult=htmlentities($codeResult);
-      return $codeResult;
+    protected function fetchcodefromurl($url) {
+        $cleanurl = (string) trim(strip_tags($url));
+        $ch = curl_init($cleanurl);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        $coderesult = curl_exec($ch);
+        $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        if ($httpcode != 200) {
+            $coderesult = $url;
+        }
+        curl_close ($ch);
+        $coderesult = htmlentities($coderesult);
+        return $coderesult;
     }
 
 }

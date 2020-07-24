@@ -19,7 +19,7 @@
  *
  * @package   filter_fetchandhighlightcode
  * @author    Camba Coop <info@camba.coop>
- * @copyright 2020 Camba Coop {@link www.camba.coop}
+ * @copyright 2020 Camba Coop {@link https://www.camba.coop}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
